@@ -22,6 +22,18 @@
 
 var fruitsString = ["watermelon", "banana", "avocado", "grape", "pear"];
 var colorsString = ["black", "pink", "yellow", "orange", "red"];
+var wordDefinition = {
+    watermelon: "A large, sweet fruit with a hard green rind and juicy red or pink flesh filled with black seeds.",
+    banana: "A long, curved fruit with a soft, sweet interior and a yellow peel.",
+    avocado: "A creamy fruit with green flesh, often used in salads and guacamole.",
+    grape: "A small, round fruit, typically purple, green, or red, often used to make wine.",
+    pear: "A sweet fruit with a rounded base and tapering top, often green or yellow in color.",
+    black: "The darkest color, the result of the absence of light.",
+    pink: "A light shade of red, often associated with softness and delicacy.",
+    yellow: "A bright and cheerful color, often associated with the sun and energy.",
+    orange: "A color between red and yellow, often associated with warmth and enthusiasm.",
+    red: "A bold and vibrant color, often associated with passion and intensity."
+};
 var guessedWordF = fruitsString[Math.floor(Math.random() * fruitsString.length)];
 var guessedWordC = colorsString[Math.floor(Math.random() * colorsString.length)];
 var livesArr = [];
@@ -40,6 +52,10 @@ document.getElementById("letterTextt").style.display = "none";
 document.getElementById("letterID").style.display = "none";
 document.getElementById("wrongLetters").style.display = "none";
 document.getElementById("submitID").style.display = "none";
+document.getElementById("hint").style.display = "none";
+
+// document.getElementById("rules").style.display = "none";
+
 
 
 // function hangmanGame(){}
@@ -63,10 +79,13 @@ function dashGeneratorC(){
 // console.log(dashGenerator());
 
 function submitClick(){
+    // document.getElementById("rules").style.display = "inline";
+    document.getElementById("hangmanImg").style.display = "none";
     var submittedVal = document.getElementById("letterID").value.toLowerCase();
     var j = 0;
     var w = 0;
     var gameOverFlag = false;
+    var isFound = false;
     // console.log("here");
     // console.log("ARRAY = "+dashesArr);
     // finished looping over dashesArr
@@ -77,6 +96,15 @@ function submitClick(){
         // if(typeof(submittedVal)=='number'){
         //     console.log("A NUMBER");
         // }
+        if(livesArr.length == 0){
+            alert("GAME OVER! You lost !!");
+            gameOverFlag = true;
+            // ************* RESET AND START AGAIN ************* //
+            // document.getElementById("selectCategory").style.display = "inline";
+            // document.getElementById("BothCategories").style.display = "inline";
+            // document.getElementById("dashes").style.display = "none";
+            reset();
+        }
         if(wrongLetters.includes(submittedVal)){
             alert("You've already guessed this letter !");
             return;
@@ -99,31 +127,35 @@ function submitClick(){
         //     alert("Please enter letters only !");
         //     return;
         // }
-        if(livesArr.length == 0){
-            alert("GAME OVER! You lost !!");
-            gameOverFlag = true;
-            // ************* RESET AND START AGAIN ************* //
-            // document.getElementById("selectCategory").style.display = "inline";
-            // document.getElementById("BothCategories").style.display = "inline";
-            // document.getElementById("dashes").style.display = "none";
-            reset();
+        if(guessedLetters.includes(submittedVal) && gameOverFlag == false){
+            // console.log(guessedLetters);
+            alert("You've already guessed this letter !");
+            // livesArr.pop();
+            // document.getElementById("lives").textContent = livesArr.join(' ');    
+            return;
         }
         for(j; j<guessedWordF.length; j++){
             if(submittedVal === guessedWordF[j]){
                     // if a correct letter is guessed twice --> sth is wrong when there's duplicate letters
                     // guessedLetters.push(submittedVal);
-                    // console.log(guessedLetters);
-                    // if(!guessedLetters.includes(submittedVal)){
-                        dashesArr[j] = submittedVal;
-                    // }
-                    // else{
-                        // alert("You've already guessed this letter !");
-                        // return;
-                    // }
-                    // guessedLetters.push(submittedVal);
-                    // isguessed = true;
+                    dashesArr[j] = submittedVal;
+                    guessedLetters.push(submittedVal);
+                    // isFound = true;
             }
-        }    
+            // if(isFound == false){
+            //     livesArr.pop();
+            //     document.getElementById("lives").textContent = livesArr.join(' ');
+            // }
+        }  
+        // console.log(guessedLetters);
+        // if(isFound == true){
+        //     alert("You have already guessed this letter !");
+        // }  
+        // if(guessedLetters.includes(submittedVal)){
+        //     // console.log(guessedLetters);
+        //     alert("You have already guessed this letter !");
+        //     return;
+        // }
         if(!dashesArr.includes('-')){ // NO DASHES, all letters guessed !!
             alert("CONGRATS!! You've guessed "+"'"+guessedWordF+"' "+"successfully !!");
             setTimeout(reset, 5000);
@@ -137,7 +169,7 @@ function submitClick(){
                     wrongLetters.push(submittedVal);
                     console.log(wrongLetters);
                 // }
-                document.getElementById("wrongLettersInput").textContent = wrongLetters.join('');
+                document.getElementById("wrongLettersInput").textContent = wrongLetters.join(' ');
                 console.log(wrongLetters);
                 alert("Wrong Guess !!");
                 // DECREMENT LIVES //
@@ -170,9 +202,17 @@ function submitClick(){
             reset();
             // ************* RESET AND START AGAIN ************* //
         } 
+        if(guessedLetters.includes(submittedVal) && gameOverFlag == false){
+            // console.log(guessedLetters);
+            alert("You've already guessed this letter !");
+            // livesArr.pop();
+            // document.getElementById("lives").textContent = livesArr.join(' ');    
+            return;
+        }
         for(j; j<guessedWordC.length; j++){
             if(submittedVal === guessedWordC[j]){
                     dashesArr[j] = submittedVal;
+                    guessedLetters.push(submittedVal);
                     // guessedLetters.push(submittedVal);
                 // console.log(dashesArr);
             }
@@ -207,45 +247,43 @@ function submitClick(){
     // clearTimeout(timerId);
 
     var timerFlag = false; // cause the timer was starting before clicking on anything !!
-    var keyPressed = false;
+    // var keyPressed = false;
     function inputclick(){
-        // console.log("INSIDE");
-        // countdown();
         document.addEventListener('keydown', (event) => {
             // keyPressed[event.key] = true;
             // console.log("keyDown");
-            keyPressed = true;
-            time = 10;
+            // keyPressed = true;
+            time = 20;
             timerFlag = true;
             countdown();
         });
-        if(keyPressed == true){
-            timerFlag = true;
-            countdown();
-        }
+        // if(keyPressed == true){
+        //     timerFlag = true;
+        //     countdown();
+        // }
     // test();
 }
     
-    var time = 10;
+    var time = 20;
     var elem = document.getElementById('timerUpdate');
-    var timerId = setInterval(countdown, 1000);
+    var timerId = setInterval(countdown, 1000); // wait 1s then decrement
     function countdown() {
-        // if(keyPressed == true){
-        //     var time = 10;
-        //     var elem = document.getElementById('timerUpdate');
-        //     var timerId = setInterval(countdown, 1000);
-        // }
-        if(timerFlag){
+        if(timerFlag){ // user inputs a letter
             if (time == -1) {
+                // elem.innerHTML = "00:00";
                 clearTimeout(timerId);
                 alert("Time's Up!");
                 reset();
-            } else {
-                elem.innerHTML = "00:"+time;
+            } else if(time < 10){
+                    elem.textContent = "00:"+"0"+time;
+                    time--;
+            }
+                else{
+                elem.textContent = "00:"+time;
                 time--;
             }
+            }
         }
-    }
 // }
 
 
@@ -255,12 +293,31 @@ function selectFruitsCat(){
     // ************* When I input a value, the time is being reset ************* // - DONE
     // ID = timerUpdate
 
+    // document.getElementById("rules").style.display = "inline";
     console.log(guessedWordF);
+    // wordDefinition.key(guessedWordF);
+    // console.log(Object.keys(wordDefinition).includes(guessedWordF));
+
+    // var clicked = false;
+    document.getElementById('hintButton').addEventListener("click", function() {
+        var hint = wordDefinition[guessedWordF];
+        document.getElementById("hint").textContent = "Hint: " + hint;    
+        clicked = true;
+        console.log(livesArr);
+        livesArr.pop();
+        document.getElementById("lives").textContent = livesArr.join(' ');
+        console.log(livesArr);
+    });
+
     document.getElementById("letters").style.display = "inline";
     document.getElementById("letterTextt").style.display = "inline";
     document.getElementById("letterID").style.display = "inline";
     document.getElementById("wrongLetters").style.display = "inline";
     document.getElementById("submitID").style.display = "inline";
+    document.getElementById("hint").style.display = "inline";
+    document.getElementById("hangmanImg").style.display = "none";
+    document.getElementById("rules").style.display = "none";
+    
     
     // time = 10;
     // document.getElementById("dashes").style.display = "inline";
@@ -274,8 +331,13 @@ function selectFruitsCat(){
         livesArr.push("🩷");
     }
     document.getElementById("lives").textContent = livesArr.join(' ');
-    var fruitMap = {Fruits:fruitsString};
+    var fruitMap = {Fruits:fruitsString};    
     document.getElementById("selectCategory").textContent = "Guess The Word";
+    // console.log(document.getElementById("selectCategory").style.top.textContent);
+    document.getElementById("selectCategory").style.top = "180px";
+    // console.log(document.getElementById("selectCategory").style.top);
+    document.getElementById("selectCategory").style.left = "500px";
+    // console.log(document.getElementById("selectCategory").style.fontSize.textContent);
     document.getElementById("selectCategory").style.fontSize = "50px";
     document.getElementById("BothCategories").style.display = "none";
     // ************* DISPLAY "GUESS THE WORD" ************* //
@@ -293,12 +355,27 @@ function selectColorsCat(){
     // ************* START TIME ************* // - DONE
     // ************* When I input a value, the time is being reset ************* // - DONE
 
+    // document.getElementById("rules").style.display = "inline";
     console.log(guessedWordC);
+    // console.log(Object.keys(wordDefinition).includes(guessedWordF));
+    // var hint = wordDefinition[guessedWordC];
+    document.getElementById('hintButton').addEventListener("click", function() {
+        var hint = wordDefinition[guessedWordC];
+        document.getElementById("hint").textContent = "Hint: " + hint;
+        clicked = true;
+        livesArr.pop();
+        document.getElementById("lives").textContent = livesArr.join(' ');
+    });
     document.getElementById("letters").style.display = "inline";
     document.getElementById("letterTextt").style.display = "inline";
     document.getElementById("letterID").style.display = "inline";
     document.getElementById("wrongLetters").style.display = "inline";
     document.getElementById("submitID").style.display = "inline";
+    document.getElementById("hint").style.display = "inline";
+    document.getElementById("hangmanImg").style.display = "none";
+    document.getElementById("rules").style.display = "none";
+
+
 
     timerFlag = true;
     countdown();
@@ -313,6 +390,11 @@ function selectColorsCat(){
     var colorMap = {Colors:colorsString};
     // var guess = "Guess The Word";
     document.getElementById("selectCategory").textContent = "Guess The Word";
+    // console.log(document.getElementById("selectCategory").style.top.textContent);
+    document.getElementById("selectCategory").style.top = "180px";
+    // console.log(document.getElementById("selectCategory").style.top);
+    document.getElementById("selectCategory").style.left = "500px";
+    // console.log(document.getElementById("selectCategory").style.fontSize.textContent);
     document.getElementById("selectCategory").style.fontSize = "50px";
     document.getElementById("BothCategories").style.display = "none";
     // ************* DISPLAY "GUESS THE WORD" ************* //

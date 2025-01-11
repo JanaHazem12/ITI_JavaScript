@@ -8,16 +8,24 @@
 <body>
     <div class="bigDiv">
         <div class="bigDivText">HANGMAN💀</div>
-        <div class="rules">
-            <div class="rulesText">Rules: You have to enter the letters one by one to guess the word !</div>
+        <!-- <div class="play" id="play"><div class="playText" id="playText">LET'S PLAY</div> </div> -->
+        <div class="rules" id="rules">
+            <div id="bigRulesText">Rules:</div>
+            <div class="rulesText" id="rulesText">
+                <ul>
+                    <li id="listitem1">Guess one letter at a time. Slowly. Carefully. Your keyboard is judging you⌨️</li>
+                    <li id="listitem2">We’ll validate your guesses, so don’t try slipping in numbers, emojis, or love letters.</li>
+                    <li id="listitem3">No cheating! If you guess the same letter twice, we’ll just shake our heads disapprovingly🚫🔤</div></li>
+                </ul>
         </div>
-        <div class="selectCategory" id="selectCategory">Select a Category:</div>
+        <div id="hangmanImg"><img src="2241387.png"></div>
+        <div class="selectCategory" id="selectCategory">Select Category</div>
         <div class="BothCategories" id="BothCategories">
             <div class="cat1" id="fruitsCat"><input type="button" value="Fruits" class="catbutt1" id="catbutton1" onclick="selectFruitsCat()"></div>
             <div class="cat2" id="colorsCat"><input type="button" value="Colors" class="catbutt2" id="catbutton2"onclick="selectColorsCat()" ></div>
         </div>
         <div class="word"><div class="wordText" id="dashes"></div></div>
-        <!-- <div class="hint"><div class="hintText">Hint: It is a long established fact that a reader will be distracted by the readable content.</div></div> -->
+
         <div class="lives" id="lives">
             <!-- <div class="live1" id="live1">🩷</div>
             <div class="live2" id="live2">🩷</div>
@@ -33,6 +41,7 @@
                 <div class="wrongLettersInput" id="wrongLettersInput"></div>
             </div>
         </div>
+        <div class="hint" id="hint"><input type = button id="hintButton" value="Hint"></div>
         <div class="submitt"><input type="submit" id="submitID" onclick="submitClick()"></div>
         <div class="timer"><div class="timerUpdate" id="timerUpdate"></div></div>
     </div>
