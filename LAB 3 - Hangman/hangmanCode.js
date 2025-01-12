@@ -53,6 +53,10 @@ document.getElementById("letterID").style.display = "none";
 document.getElementById("wrongLetters").style.display = "none";
 document.getElementById("submitID").style.display = "none";
 document.getElementById("hint").style.display = "none";
+document.getElementById("CheeringAudio").style.display = "none";
+document.getElementById("gameOverAudio").style.display = "none";
+
+
 
 // document.getElementById("rules").style.display = "none";
 
@@ -85,7 +89,7 @@ function submitClick(){
     var j = 0;
     var w = 0;
     var gameOverFlag = false;
-    var isFound = false;
+    var wrongLet = true;
     // console.log("here");
     // console.log("ARRAY = "+dashesArr);
     // finished looping over dashesArr
@@ -97,6 +101,7 @@ function submitClick(){
         //     console.log("A NUMBER");
         // }
         if(livesArr.length == 0){
+            document.getElementById("gameOverAudio").play();
             alert("GAME OVER! You lost !!");
             gameOverFlag = true;
             // ************* RESET AND START AGAIN ************* //
@@ -105,7 +110,8 @@ function submitClick(){
             // document.getElementById("dashes").style.display = "none";
             reset();
         }
-        if(wrongLetters.includes(submittedVal)){
+        if(wrongLetters.includes(submittedVal) && gameOverFlag == false){
+            wrongLet = false;
             alert("You've already guessed this letter !");
             return;
         }
@@ -157,6 +163,7 @@ function submitClick(){
         //     return;
         // }
         if(!dashesArr.includes('-')){ // NO DASHES, all letters guessed !!
+            document.getElementById("CheeringAudio").play();
             alert("CONGRATS!! You've guessed "+"'"+guessedWordF+"' "+"successfully !!");
             setTimeout(reset, 5000);
         }
@@ -183,7 +190,14 @@ function submitClick(){
     // ************* IF THE CATEGORY IS COLORS ************* //
     if(!colorsFlag){
         // console.log("color flag");
-        if(wrongLetters.includes(submittedVal)){
+        if(livesArr.length == 0){
+            document.getElementById("gameOverAudio").play();
+            alert("GAME OVER! You lost !!");
+            gameOverFlag = true;
+            reset();
+            // ************* RESET AND START AGAIN ************* //
+        } 
+        if(wrongLetters.includes(submittedVal) && gameOverFlag == false){
             alert("You've already guessed this letter !");
             return;
         }
@@ -196,12 +210,6 @@ function submitClick(){
             // console.log(submittedVal);
             return;
         }
-        if(livesArr.length == 0){
-            alert("GAME OVER! You lost !!");
-            gameOverFlag = true;
-            reset();
-            // ************* RESET AND START AGAIN ************* //
-        } 
         if(guessedLetters.includes(submittedVal) && gameOverFlag == false){
             // console.log(guessedLetters);
             alert("You've already guessed this letter !");
@@ -218,6 +226,7 @@ function submitClick(){
             }
         }
         if(!dashesArr.includes('-')){
+            document.getElementById("CheeringAudio").play();
             alert("CONGRATS!! You've guessed "+"'"+guessedWordC+"' "+"successfully !!");
             setTimeout(reset, 5000);
             // setTimeout(function(){reset()}, 5000);
@@ -272,7 +281,8 @@ function submitClick(){
             if (time == -1) {
                 // elem.innerHTML = "00:00";
                 clearTimeout(timerId);
-                alert("Time's Up!");
+                document.getElementById("gameOverAudio").play();
+                alert("Time's Up! You lost");
                 reset();
             } else if(time < 10){
                     elem.textContent = "00:"+"0"+time;
