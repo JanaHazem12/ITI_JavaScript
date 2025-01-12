@@ -253,7 +253,7 @@ function submitClick(){
             // keyPressed[event.key] = true;
             // console.log("keyDown");
             // keyPressed = true;
-            time = 20;
+            time = 30;
             timerFlag = true;
             countdown();
         });
@@ -264,7 +264,7 @@ function submitClick(){
     // test();
 }
     
-    var time = 20;
+    var time = 30;
     var elem = document.getElementById('timerUpdate');
     var timerId = setInterval(countdown, 1000); // wait 1s then decrement
     function countdown() {

@@ -308,7 +308,7 @@ img{
 }
 
 .letterText{
-    width: 95px;
+    width: 100px;
     height: 20px;
     border: 3px solid white;
     /* border-radius: 20px; */
@@ -320,7 +320,7 @@ img{
 }
 
 input[type="text"]{
-    width: 100px;
+    width: 105px;
     height: 20px;
     border: 3px solid white;
     /* border-radius: 20px; */
