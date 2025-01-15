@@ -94,6 +94,8 @@ function submitClick(){
     if(!fruitsFlag){ // if fruitsFlag = false --> the user chose the FRUITS cat.
         if(livesArr.length == 0){
             document.getElementById("gameOverAudio").play();
+            document.getElementById("letterID").disabled=true;
+            document.getElementById("submitID").disabled=true;
             alert("GAME OVER! You lost !!");
             gameOverFlag = true;
             // ************* RESET AND START AGAIN ************* //
@@ -129,6 +131,8 @@ function submitClick(){
 
         if(!dashesArr.includes('-')){ // NO DASHES, all letters guessed !!
             document.getElementById("CheeringAudio").play();
+            document.getElementById("letterID").disabled=true;
+            document.getElementById("submitID").disabled=true;
             alert("CONGRATS!! You've guessed "+"'"+guessedWordF+"' "+"successfully !!");
             setTimeout(reset, 5000);
         }
@@ -152,6 +156,8 @@ function submitClick(){
     if(!colorsFlag){
         if(livesArr.length == 0){
             document.getElementById("gameOverAudio").play();
+            document.getElementById("letterID").disabled=true;
+            document.getElementById("submitID").disabled=true;
             alert("GAME OVER! You lost !!");
             gameOverFlag = true;
             reset();
@@ -182,6 +188,8 @@ function submitClick(){
         }
         if(!dashesArr.includes('-')){
             document.getElementById("CheeringAudio").play();
+            document.getElementById("letterID").disabled=true;
+            document.getElementById("submitID").disabled=true;
             alert("CONGRATS!! You've guessed "+"'"+guessedWordC+"' "+"successfully !!");
             setTimeout(reset, 5000); // to leave the word on screen for 5s
         }
@@ -323,3 +331,12 @@ function reset(){
     // returns the href (URL) of the current page
 }
 
+window.selectColorsCat=selectColorsCat;
+window.selectFruitsCat=selectFruitsCat;
+window.submitClick=submitClick;
+window.reset=reset;
+window.dashGeneratorF=dashGeneratorF;
+window.dashGeneratorC=dashGeneratorC;
+window.inputclick=inputclick;
+
+export{fruitsString, colorsString, wordDefinition, guessedWordF, guessedWordC, livesArr, fruitsFlag, colorsFlag, wrongLetters, dashesArr, guessedLetters, i};

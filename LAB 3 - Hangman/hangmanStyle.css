@@ -2,26 +2,11 @@ body{
     background-color: #FF8DB5;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-} 
-
-html, body {
-    height: 100%; 
-}
-
 .bigDiv{
     width: 800px;
     height: 800px;
     background-color:#FFD1DC;
     margin: auto;
-}
-
-#listitem1, #listitem2, #listitem3{
-    padding-right: 25px;
-    margin-left: 20px;
 }
 
 @font-face {
@@ -56,7 +41,7 @@ html, body {
     left: 425px; */
     top: 120px;
     left: 490px;
-    /* padding-right: 10px; */
+    padding-right: 10px;
     color: white; 
     font-size: 18px;
     font-family: NewRulesFont;
@@ -65,7 +50,7 @@ html, body {
 
 #bigRulesText{
     color: rgb(250, 96, 168);
-    /* top: 110px; */
+    top: 110px;
     left: 500px;
     font-size: 13px;
 }
@@ -82,13 +67,13 @@ html, body {
 .rulesText{
     width: 440px;
     height: 100px;
-    /* position: absolute; */
+    position: absolute;
     font-size: 12px;
     /* top: 15px; */
     /* top: 0px; */
-    /* top: 5px; */
-    /* right: 50px; */
-    text-align: center;
+    top: 5px;
+    right: 20px;
+    text-align: left;
     font-family: NewRulesFont;
     color: rgb(250, 96, 168);
     margin-bottom: 10px;
